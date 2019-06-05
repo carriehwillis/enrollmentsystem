@@ -1,28 +1,53 @@
 import java.util.*;
+
+/**
+* A Teacher class for use in a University enrollment system.
+@version 1.2
+@author Carrie Willis
+*/
+
 public class Teacher extends Person
 {
-    private double salary;
-    private String department;
+      private String rank;
+      private Scanner scanner;
 
-    public Teacher(String fName, String lName, String email, double salary, String department)
+    /**
+    * Create a Teacher object.
+    @param fName First name
+    @param lName Last name
+    @param rank Professor's Rank (Professor, Associate Professor, Assistant Professor)
+    */
+    public Teacher(String fName, String lName, String rank)
     {
-        super(fName, lName, email);
-        this.salary = salary;
-        this.department = department;
+        super(fName, lName);
+        this.rank = rank;
     }
 
-    public double getSalary()
+    /**
+    * Create Teacher object based entirely on user input
+    */
+    public Teacher()
     {
-        return salary;
+      super();
     }
 
-    public String getDepartment()
-    {
-        return department;
-    }
 
-    public void assignClasses(Course course)
-    {
-        courses.add(course);
-    }
+    // /**
+    // * Return the Teacher's salary.
+    // @return The teacher's salary
+    // */
+    // public double getSalary()
+    // {
+    //     return salary;
+    // }
+    //
+    // /**
+    // * Get the department that the Teacher instructs for.
+    // @return The Teacher's department
+    // */
+    // public String getDepartment()
+    // {
+    //     return department;
+    // }
+
 }
