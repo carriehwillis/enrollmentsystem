@@ -1,14 +1,7 @@
 # final
 Final project for CIS 414 Object Oriented Programming
 
-- Initial commit: version 1 (not really sure how to use GitHub just yet)
-- 6/5 edit: Added class documentation and inputs to follow requirements (below).
-- Next steps: try/catch for InputMismatchException in input validation.
-
-
-========================================================
 ====================== OBJECTIVE =======================
-========================================================
 
 Write a complete program for a university registration system.
 
@@ -32,9 +25,7 @@ Students names are then obtained from an existing enrollment.txt (a text file is
 Note: A sample program to read a certain number from a text file is included.
 
 
-========================================================
 ======================= CLASSES ========================
-========================================================
 
 The minimum set of classes in your program must include:
 
