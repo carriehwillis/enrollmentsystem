@@ -1,5 +1,4 @@
 # final
-Final project for CIS 414 Object Oriented Programming
 
 ====================== OBJECTIVE =======================
 
@@ -12,8 +11,8 @@ Ask the user for:
 
 When all done, your program will print out the roster of the class as follows:
 
-Course: MSCIS 414, Object-oriented programming
-Faculty: Professor Kayed Akkawi
+Course: CHEM 414 - Organic Chemistry
+Faculty: Professor John Smith
 Followed by a list of the students’ names and ID numbers.
 
 ===================== CLASS SIZE =======================
