@@ -48,9 +48,7 @@ Course class has the course ID Number, Room assigned, and class start and end ti
 
 • A Registrar class, which will include a main method
 
-========================================================
 ======================= RUBRIC =========================
-========================================================
 
 Grading will be based on the following criteria:
 • The use of Inheritance
