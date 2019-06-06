@@ -9,45 +9,70 @@ import java.util.*;
 public class Teacher extends Person
 {
       private String rank;
+      private String department;
       private Scanner scanner;
-
-    /**
-    * Create a Teacher object.
-    @param fName First name
-    @param lName Last name
-    @param rank Professor's Rank (Professor, Associate Professor, Assistant Professor)
-    */
-    public Teacher(String fName, String lName, String rank)
-    {
-        super(fName, lName);
-        this.rank = rank;
-    }
-
     /**
     * Create Teacher object based entirely on user input
     */
     public Teacher()
     {
       super();
+      scanner = new Scanner(System.in);
+      setDepartment();
+      setRank();
+
     }
 
+    public String setRank()
+  	{
+  		System.out.println("Select the faculty's rank:");
+      System.out.println();
+  		System.out.println("Enter 1 for Professor");
+  		System.out.println("Enter 2 for Associate Professor");
+  		System.out.println("Enter 3 for Assistant Professor");
+  		String isRank = scanner.next();
+  		isRank = isRank.trim();
+  		if(Validator.validateRank(isRank) != null)
+  		{
+  			rank = Validator.validateRank(isRank);
+  		}
+  		else
+  		{
+  			System.out.println("Please enter one of the given options.");
+  			setRank();
+  		}
+  		return rank;
+  	}
 
-    // /**
-    // * Return the Teacher's salary.
-    // @return The teacher's salary
-    // */
-    // public double getSalary()
-    // {
-    //     return salary;
-    // }
-    //
-    // /**
-    // * Get the department that the Teacher instructs for.
-    // @return The Teacher's department
-    // */
-    // public String getDepartment()
-    // {
-    //     return department;
-    // }
+    public void setDepartment()
+    {
+      System.out.println("What department does the faculty belong to?");
+      String dept = scanner.nextLine();
+      if(Validator.validateDept(dept))
+      {
+        department = dept;
+      }
+      else
+      {
+        System.out.println("Invalid department name.");
+        setDepartment();
+      }
+    }
+
+    public String toString()
+    {
+      String output = "";
+      output += rank + " " + getName() + " (ID: " + id + ")";
+      return output;
+    }
+
+    /**
+    * Get the department that the Teacher instructs for.
+    @return The Teacher's department
+    */
+    public String getDepartment()
+    {
+        return department;
+    }
 
 }

@@ -1,28 +1,17 @@
-import java.util.*;
-import java.util.Scanner;
-
-/**
-*	A registrar system which creates courses and teachers based on user input.
-@version 1.2
-@author Carrie Willis
-*/
-
-public class Registrar
+public class EnrollmentProgram
 {
-	private Scanner scanner;
-	private Database database;
+  public EnrollmentProgram()
+  {
 
-	/**
-	*	Create a registrar item.
+  }
+
+  /**
+	*	Prompt the user for information used to create the course and professor,
+	* then assign the professor to the course.
 	*/
-	public Registrar()
-	{
-		scanner = new Scanner(System.in);
-		database = new Database();
-	}
-
 	public static void main()
 	{
+
 		System.out.println("Welcome to the CAESAR+ Enrollment System.");
 		System.out.println("Please enter the information below to create a new course.");
 		System.out.println()
@@ -33,7 +22,4 @@ public class Registrar
 		database.addClass(course, prof);
 		database.printRoster(course1);
 	}
-}
-
-
 }

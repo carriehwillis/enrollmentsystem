@@ -9,15 +9,29 @@ public class Student extends Person
 	private String major;
 
 	/**
-	*	Create a Student.
-	@param fName Student's first name
-	@param lName Student's last name
-	@param major Student's major
+	*	Create a Student based on user input.
 	*/
-	public Student(String fName, String lName, String major)
+
+	public Student()
 	{
-		super(fName, lName);
-		this.major = major;
+		super();
+		setMajor();
+	}
+
+	public void setMajor()
+	{
+	  System.out.println("Please enter the student's major.");
+	  scanner.nextLine();
+	  String isMajor = scanner.nextLine();
+	  if(Validator.validateMajor(isMajor))
+	  {
+	    major = isMajor;
+	  }
+	  else
+	  {
+	    System.out.println("Invalid entry.");
+	    setMajor();
+	  }
 	}
 
 	/**
