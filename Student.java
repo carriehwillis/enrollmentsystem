@@ -1,3 +1,5 @@
+import java.util.regex.*;
+
 /**
 * A Student class for use in a University enrollment system.
 @version 1.2
@@ -7,6 +9,9 @@
 public class Student extends Person
 {
 	private String major;
+
+	//for input validation
+	private static final int maxMajor = 40;
 
 	/**
 	*	Create a Student based on user input.
@@ -23,7 +28,7 @@ public class Student extends Person
 	  System.out.println("Please enter the student's major.");
 	  scanner.nextLine();
 	  String isMajor = scanner.nextLine();
-	  if(Validator.validateMajor(isMajor))
+	  if(Pattern.matches(".*[a-zA-Z]+.*", isMajor) && isMajor.length() > 0 && isMajor.length() < (maxMajor + 1))
 	  {
 	    major = isMajor;
 	  }
@@ -42,4 +47,6 @@ public class Student extends Person
 	{
 		return major;
 	}
+
+
 }

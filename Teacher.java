@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.regex.*;
 
 /**
 * A Teacher class for use in a University enrollment system.
@@ -11,6 +12,9 @@ public class Teacher extends Person
       private String rank;
       private String department;
       private Scanner scanner;
+
+      //used for input validation
+      private static final int maxDept = 50;
     /**
     * Create Teacher object based entirely on user input
     */
@@ -32,9 +36,9 @@ public class Teacher extends Person
   		System.out.println("Enter 3 for Assistant Professor");
   		String isRank = scanner.next();
   		isRank = isRank.trim();
-  		if(Validator.validateRank(isRank) != null)
+  		if(validateRank(isRank) != null)
   		{
-  			rank = Validator.validateRank(isRank);
+  			rank = validateRank(isRank);
   		}
   		else
   		{
@@ -48,7 +52,7 @@ public class Teacher extends Person
     {
       System.out.println("What department does the faculty belong to?");
       String dept = scanner.nextLine();
-      if(Validator.validateDept(dept))
+      if(Pattern.matches(".*[a-zA-Z]+.*", dept) && (dept.length()>0 && dept.length() < maxDept + 1))
       {
         department = dept;
       }
@@ -75,4 +79,30 @@ public class Teacher extends Person
         return department;
     }
 
+    /**
+     * Validate that the rank input by the user is one of the accepted numbers.
+     * @param selection The string that the user inputted.
+     * @return The rank corresponding to the user's selection, or null if the selection is invalid.
+     **/
+    	public static String validateRank(String selection)
+    	{
+    		String rank = null;
+    		if(selection.equals("1"))
+    		{
+    				rank = "Professor";
+    		}
+    		else if (selection.equals("2"))
+    		{
+    			rank = "Associate Professor";
+    		}
+    		else if (selection.equals("3"))
+    		{
+    			rank = "Assistant Professor";
+    		}
+    		else
+    		{
+    			rank = null;
+    		}
+    		return rank;
+    	}
 }
