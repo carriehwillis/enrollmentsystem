@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.regex.*;
 
 /**
 * A class for University courses. Students are enrolled and appended to a list of students in the class.
@@ -15,6 +16,12 @@ public class Course
     private String courseName;
     private int maxStudents;
     private int enrollNo;
+    private Database database;
+
+    //set the limits on character count for user inputs
+    private static final int maxCourseName = 60;
+  	private static final int courseMin = 5;
+  	private static final int courseMax = 200;
 
   /**
   * Create a new Course object based on user input.
@@ -36,16 +43,31 @@ public class Course
 	{
 		System.out.println("Please enter a 5-digit course ID number: ");
     String isID = scanner.next();
-		if(Validator.validateCourseID(isID))
+		if(database.courseIDExists(isID))
+    {
+      System.out.println("The course ID number " + isID + " is taken.");
+      setCourseID();
+    }
+    else if(Pattern.matches("\\d{5}", isID))
 		{
 			courseID = isID;
 		}
 		else
 		{
 			System.out.println("Course ID number must be 5 digits.");
-			setCourseID();
+			System.out.println();
+      setCourseID();
 		}
 	}
+
+/**
+ * Returns the course ID.
+ * @return The course ID.
+ **/
+  public String getCourseID()
+  {
+    return courseID;
+  }
 
 	/**
 	* Get the course name from the user.
@@ -55,7 +77,7 @@ public class Course
 		System.out.println("Please enter the course name:");
 		scanner.nextLine();
     String isName = scanner.nextLine();
-		if(Validator.validateCourseName(isName))
+		if(Pattern.matches(".*[a-zA-Z]+.*", isName) && isName.length() > 0 && isName.length() < (maxCourseName + 1))
 		{
 			courseName = isName;
 		}
@@ -78,16 +100,14 @@ public class Course
       {
         String input = scanner.next();
         int isMax = Integer.parseInt(input);
-    		if(Validator.validateCourseMax(isMax))
-    		{
+        if(isMax > (courseMin - 1) && isMax < (courseMax + 1))
+        {
     			maxStudents = isMax;
           calculateNumbers(maxStudents);
     		}
     		else
     		{
-          int min = Validator.getCourseMin();
-          int max = Validator.getCourseMax();
-          System.out.println("Maximum class size must be between " + min + " and " + max + " students.");
+          System.out.println("Maximum class size must be between " + courseMin + " and " + courseMax + " students.");
     			System.out.println();
           setMax();
   		  }
