@@ -9,9 +9,10 @@ import java.io.*;
 
 public class Database
 {
-  private HashMap<Course, ArrayList<Person>> roster;
-  private ArrayList<Person> people;
+  private static HashMap<Course, ArrayList<Person>> roster;
+  private static ArrayList<Person> people;
   private Iterator it;
+  private static Scanner scanner;
 
 /**
  * Create a new Database object.
@@ -20,13 +21,14 @@ public class Database
   {
     roster = new HashMap<Course, ArrayList<Person>>();
     people = new ArrayList<Person>();
+    scanner = new Scanner(System.in);
   }
 
 /**
  * Add a newly-created Person to the list of people.
  * @param person A person to add.
  **/
-  public void addPeople(Person person)
+  public static void addPeople(Person person)
   {
     people.add(person);
   }
@@ -62,17 +64,21 @@ public class Database
  * @param person The person to add to the course roster
  **/
 
-  public synchronized void addToClass(Course course, Person person)
+  public static synchronized void addToClass(Course course, Person person)
   {
     //check to see if the person is already listed in the course
-    if(roster.get(course) != null && searchCourse(course, person) == false)
-    {
-      roster.get(course).add(person);
-    }
-    else if(roster.get(course) != null && searchCourse(course, person))
+    if(searchCourse(course, person))
     {
       System.out.println(person.getName() + " is already a member of " + course.toString());
       System.out.println();
+    }
+    if(person instanceof Teacher && getNumberFaculty(course) > 0)
+    {
+        verifyAdd(course, person);
+    }
+    else if(roster.get(course) != null)
+    {
+      roster.get(course).add(person);
     }
     //create a roster for a course that doesn't have one yet
     else
@@ -83,22 +89,76 @@ public class Database
     }
   }
 
-public boolean isUniqueID(int id)
+/**
+ * If a course already has a faculty member, verify that the user wants to add another faculty member.
+ * Supports courses with multiple professors.
+ * @param course The course the user is trying to add faculty to
+ * @param person The faculty member to add (if confirmed)
+ **/
+public static void verifyAdd(Course course, Person person)
+{
+  System.out.println(printProf(course) + "is already assigned to " + course.toString() + ".");
+  System.out.println("Are you sure you want to add " + person.toString() + " as an additional faculty member for this course?");
+  System.out.println("Enter Yes or No.");
+  String response = scanner.nextLine();
+  if(response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("y"))
   {
-      //search the list of people in the people list (btw Person class needs to add to the database as part of constructor)
-      //anyway search the lsit of people in the people list using .getID() . if it returns true, (and this is back in the generateID() method in Person),
-      //then retry generateID().
-      return true;
+    roster.get(course).add(person);
+    System.out.println(person.toString() + " added as additional faculty member to " + course.toString());
+   }
+  else if(response.equalsIgnoreCase("no") || response.equalsIgnoreCase("n"))
+  {
+    System.out.println("Function cancelled. " + person.getName() + " was NOT added to " + course.toString() + ".");
+  }
+  else
+  {
+    System.out.println("Please enter either Yes or No.");
+    verifyAdd(course, person);
+  }
+}
+/**
+ * Confirms whether a randomly-generated user ID number is in use by another person.
+ * @param id The ID to verify
+ * @return A boolean value representing whether the supplied ID exists
+ *
+ */
 
+public static boolean userIDExists(int id)
+  {
+    boolean found = false;
+    for(Person person : people)
+    {
+      if(person.getID() == id)
+      {
+        found = true;
       }
+    }
+    return found;
+  }
 
+public static boolean courseIDExists(int id)
+{
+  boolean found = false;
+  // Iterator it = roster.EntryMap().iterator();
+  // while(it.hasNext())
+  // {
+    // if(roster.get(course) != null)
+    // {
+      // if(it.getValue(course).contains(person))
+      // {
+        // found = true;
+      // }
+    // }
+  // }
+  return found;
+}
 /**
  * Search a course to see if a person is already enrolled in/teaching it.
  * @param course The course to check
  * @param person The person to search for
  * @return A boolean value representing whether the person was found in the course
- **/
-  private boolean searchCourse(Course course, Person person)
+ */
+  private static boolean searchCourse(Course course, Person person)
   {
      boolean found = false;
      if(roster.get(course) != null)
@@ -116,7 +176,7 @@ public boolean isUniqueID(int id)
  * @param course The course to print faculty information for
  * @return The list of faculty associated with a course
  **/
-  private String printProf(Course course)
+  private static String printProf(Course course)
   {
     if(roster.get(course) != null)
     {
@@ -146,7 +206,7 @@ public boolean isUniqueID(int id)
  * @param course The course to get enrollment information from
  * @return A list of students
  **/
-  private String printStudents(Course course)
+  private static String printStudents(Course course)
   {
     if(roster.get(course) != null)
     {
@@ -171,7 +231,7 @@ public boolean isUniqueID(int id)
  * @param course The course to check for enrollment size
  * @return An integer value corresponding to the total number of students enrolled in the class.
  **/
-  private int getNumberStudents(Course course)
+  private static int getNumberStudents(Course course)
   {
     if(roster.get(course) != null)
     {
@@ -196,7 +256,7 @@ public boolean isUniqueID(int id)
    * @param course The course to check for faculty number
    * @return An integer value corresponding to the total number of faculty associated with the class.
    **/
-  private int getNumberFaculty(Course course)
+  private static int getNumberFaculty(Course course)
   {
     if(roster.get(course) != null)
     {
@@ -221,7 +281,7 @@ public boolean isUniqueID(int id)
  * and all students enrolled.
  * @param course The course to print information on.
  **/
-  public void printRoster(Course course)
+  public static void printRoster(Course course)
   {
         System.out.println("Course: " + course);
         System.out.println("Faculty: " + printProf(course));
