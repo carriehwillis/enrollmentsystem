@@ -12,11 +12,17 @@ public class Course
 {
     private Random random;
     private Scanner scanner;
+    private Schedule schedule;
+
     private String courseID;
     private String courseName;
     private int maxStudents;
     private int enrollNo;
-    private Database database;
+
+    private String location;
+    private String sched;
+    private String startTime;
+    private String endTime;
 
     //set the limits on character count for user inputs
     private static final int maxCourseName = 60;
@@ -30,11 +36,27 @@ public class Course
   {
       random = new Random();
       scanner = new Scanner(System.in);
-      setCourseID();
-      setCourseName();
-      setMax();
-      System.out.println("Course created.");
-      getDetailedInfo();
+      schedule = new Schedule();
+      promptUser();
+      CourseDatabase.addCourse(this);
+  }
+
+public void promptUser()
+{
+  setCourseID();
+  setCourseName();
+  setMax();
+  System.out.println("Course created.");
+  setScheduleInfo();
+  getDetailedInfo();
+}
+  public void setScheduleInfo()
+  {
+    String days = schedule.getDays();
+    String startTime = schedule.setStartTime();
+    String endTime = schedule.setEndTime();
+    sched = days + "\t" + startTime + "-" + endTime;
+    location = schedule.setRoom();
   }
   /**
 	* Prompt the user for the course ID number.
@@ -43,12 +65,13 @@ public class Course
 	{
 		System.out.println("Please enter a 5-digit course ID number: ");
     String isID = scanner.next();
-		if(database.courseIDExists(isID))
+		if(CourseDatabase.courseIDExists(isID))
     {
       System.out.println("The course ID number " + isID + " is taken.");
       setCourseID();
     }
-    else if(Pattern.matches("\\d{5}", isID))
+    else
+     if(Pattern.matches("\\d{5}", isID))
 		{
 			courseID = isID;
 		}
@@ -75,7 +98,7 @@ public class Course
 	public void setCourseName()
 	{
 		System.out.println("Please enter the course name:");
-		scanner.nextLine();
+    scanner.nextLine();
     String isName = scanner.nextLine();
 		if(Pattern.matches(".*[a-zA-Z]+.*", isName) && isName.length() > 0 && isName.length() < (maxCourseName + 1))
 		{
@@ -150,8 +173,6 @@ public class Course
         String info = "======== Course Information ========\n";
         info += "Course " + courseID + " - \t" + courseName + "\n";
         info += enrollNo + " students can enroll.\n";
-        // info += students.size() + " students enrolled:\n";
-        // info += listStudents();
         System.out.println(info);
     }
 }
