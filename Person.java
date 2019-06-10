@@ -11,23 +11,23 @@ public class Person
 {
     protected int id;
     protected String fName;
+    protected String middle;
     protected String lName;
+    private PeopleDatabase db;
     private Random random;
     protected Scanner scanner;
-    protected Database database;
 
 /**
 *   Create a Person object based on user input.
 */
 		public Person()
     {
+        db = new PeopleDatabase();
         scanner = new Scanner(System.in);
         random = new Random();
-        database = new Database();
+        id = db.generateID();
         setFName();
         setLName();
-        generateID();
-				Database.addPeople(this);
     }
 
 /**
@@ -42,9 +42,12 @@ public class Person
 		this.fName = fName;
 		this.middle = middle;
 		this.lName = lName;
-		Database.addPeople(this);
 	}
 
+  public void setID(int id)
+  {
+    this.id = id;
+  }
     public void setFName()
     {
         System.out.println("First name: ");
@@ -57,6 +60,26 @@ public class Person
         {
             System.out.println("Invalid entry.");
             setFName();
+        }
+    }
+
+    public void setMiddle()
+    {
+        System.out.println("Middle name:");
+        System.out.println("For no middle name, press Enter.");
+        String isMiddle = scanner.next();
+        if(isMiddle.equals("") || isMiddle.equals(null))
+        {
+          middle = "";
+        }
+        else if(Pattern.matches("^[\\p{L} .'-]+$", isMiddle))
+        {
+            middle = isMiddle;
+        }
+        else
+        {
+            System.out.println("Invalid entry.");
+            setMiddle();
         }
     }
 
@@ -73,24 +96,6 @@ public class Person
             System.out.println("Invalid entry.");
             setLName();
         }
-    }
-
-    /**
-    *   Generate a random ID number between 0 and 999.
-    @return An integer ID number
-    */
-
-    private void generateID()
-    {
-        int isID = random.nextInt(999);
-        if(database.userIDExists(isID) == false)
-        {
-           id = isID;
-        }
-        else
-            {
-             generateID();
-            }
     }
 
     /**

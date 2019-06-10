@@ -10,7 +10,7 @@ import java.util.regex.*;
 public class Teacher extends Person
 {
       private String rank;
-      private String department;
+      // private String department;
       private Scanner scanner;
 
       //used for input validation
@@ -22,7 +22,7 @@ public class Teacher extends Person
     {
       super();
       scanner = new Scanner(System.in);
-      setDepartment();
+      // setDepartment();
       setRank();
 
     }
@@ -48,20 +48,20 @@ public class Teacher extends Person
   		return rank;
   	}
 
-    public void setDepartment()
-    {
-      System.out.println("What department does the faculty belong to?");
-      String dept = scanner.nextLine();
-      if(Pattern.matches(".*[a-zA-Z]+.*", dept) && (dept.length()>0 && dept.length() < maxDept + 1))
-      {
-        department = dept;
-      }
-      else
-      {
-        System.out.println("Invalid department name.");
-        setDepartment();
-      }
-    }
+    // public void setDepartment()
+    // {
+    //   System.out.println("What department does the faculty belong to?");
+    //   String dept = scanner.nextLine();
+    //   if(Pattern.matches(".*[a-zA-Z]+.*", dept) && (dept.length()>0 && dept.length() < maxDept + 1))
+    //   {
+    //     department = dept;
+    //   }
+    //   else
+    //   {
+    //     System.out.println("Invalid department name.");
+    //     setDepartment();
+    //   }
+    // }
 
     public String toString()
     {
@@ -70,14 +70,14 @@ public class Teacher extends Person
       return output;
     }
 
-    /**
-    * Get the department that the Teacher instructs for.
-    @return The Teacher's department
-    */
-    public String getDepartment()
-    {
-        return department;
-    }
+    // /**
+    // * Get the department that the Teacher instructs for.
+    // @return The Teacher's department
+    // */
+    // public String getDepartment()
+    // {
+    //     return department;
+    // }
 
     /**
      * Validate that the rank input by the user is one of the accepted numbers.

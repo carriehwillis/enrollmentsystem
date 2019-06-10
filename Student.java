@@ -8,10 +8,10 @@ import java.util.regex.*;
 
 public class Student extends Person
 {
-	private String major;
-
-	//for input validation
-	private static final int maxMajor = 40;
+	// private String major;
+	//
+	// //for input validation
+	// private static final int maxMajor = 40;
 
 	/**
 	*	Create a Student based on user input.
@@ -20,33 +20,33 @@ public class Student extends Person
 	public Student()
 	{
 		super();
-		setMajor();
+		// setMajor();
 	}
 
-	public void setMajor()
-	{
-	  System.out.println("Please enter the student's major.");
-	  scanner.nextLine();
-	  String isMajor = scanner.nextLine();
-	  if(Pattern.matches(".*[a-zA-Z]+.*", isMajor) && isMajor.length() > 0 && isMajor.length() < (maxMajor + 1))
-	  {
-	    major = isMajor;
-	  }
-	  else
-	  {
-	    System.out.println("Invalid entry.");
-	    setMajor();
-	  }
-	}
-
-	/**
-	*	Get the student's major.
-	@return The student's major.
-	*/
-	public String getMajor()
-	{
-		return major;
-	}
+	// public void setMajor()
+	// {
+	//   System.out.println("Please enter the student's major.");
+	//   scanner.nextLine();
+	//   String isMajor = scanner.nextLine();
+	//   if(Pattern.matches(".*[a-zA-Z]+.*", isMajor) && isMajor.length() > 0 && isMajor.length() < (maxMajor + 1))
+	//   {
+	//     major = isMajor;
+	//   }
+	//   else
+	//   {
+	//     System.out.println("Invalid entry.");
+	//     setMajor();
+	//   }
+	// }
+	//
+	// /**
+	// *	Get the student's major.
+	// @return The student's major.
+	// */
+	// public String getMajor()
+	// {
+	// 	return major;
+	// }
 
 
 }
