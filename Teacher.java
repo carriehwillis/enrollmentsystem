@@ -10,23 +10,29 @@ import java.util.regex.*;
 public class Teacher extends Person
 {
       private String rank;
-      // private String department;
+      // private String department;  <-- can use this in a future version with database queries!
       private Scanner scanner;
 
       //used for input validation
       private static final int maxDept = 50;
     /**
-    * Create Teacher object based entirely on user input
+    * Create a Teacher object based entirely on user input
     */
     public Teacher()
     {
       super();
       scanner = new Scanner(System.in);
       // setDepartment();
+      role = "faculty";
       setRank();
 
     }
 
+    /**
+     * Prompt the user for the faculty member's rank.
+     * @return The rank of the faculty member.
+     */
+    //can be improved with enums
     public String setRank()
   	{
   		System.out.println("Select the faculty's rank:");
@@ -63,6 +69,11 @@ public class Teacher extends Person
     //   }
     // }
 
+    /**
+     * Overrides the toString() method to print the faculty member's
+     * name, rank, and ID number.
+     * @return The faculty member's rank, name, and ID number.
+     */
     public String toString()
     {
       String output = "";

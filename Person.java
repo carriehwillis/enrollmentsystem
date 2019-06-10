@@ -3,31 +3,41 @@ import java.util.regex.*;
 
 /**
 * A Person class to be used in a University enrollment program. Person is extended as Student and Teacher.
-@version 1.2
+@version 1.3
 @author Carrie Willis
 */
 
 public class Person
 {
+    //utilities
+    private Random random;
+    protected Scanner scanner;
+
+    //fields
     protected int id;
     protected String fName;
     protected String middle;
     protected String lName;
-    private PeopleDatabase db;
-    private Random random;
-    protected Scanner scanner;
+    protected String role;
+    protected ArrayList<Person> people;
+
+    //just need this to make sure the class can access static methods
+    protected Database database;
 
 /**
 *   Create a Person object based on user input.
 */
-		public Person()
+    public Person()
     {
-        db = new PeopleDatabase();
+        people = new ArrayList<Person>();
         scanner = new Scanner(System.in);
         random = new Random();
-        id = db.generateID();
+        database = new Database();
+        id = Database.generateID();
         setFName();
+        setMiddle();
         setLName();
+        Database.addPeople(this);
     }
 
 /**
@@ -42,16 +52,27 @@ public class Person
 		this.fName = fName;
 		this.middle = middle;
 		this.lName = lName;
+    id = Database.generateID();
 	}
 
+	/**
+	 * Allows for setting a new ID if the first randomly-generated one
+	 * was taken by another user.
+	 */
   public void setID(int id)
   {
     this.id = id;
   }
+
+  /**
+   * Prompts the user to set the person's first name.
+   */
     public void setFName()
     {
         System.out.println("First name: ");
         String isFName = scanner.next();
+        //this regex covers letters in all scripts, including punctuation.
+        //This allows for names like François, Müller, and Ja'Nelle.
         if(Pattern.matches("^[\\p{L} .'-]+$", isFName))
         {
             fName = isFName;
@@ -63,15 +84,21 @@ public class Person
         }
     }
 
+    /**
+     * Prompt the user for the person's middle name.
+     */
     public void setMiddle()
     {
         System.out.println("Middle name:");
         System.out.println("For no middle name, press Enter.");
-        String isMiddle = scanner.next();
-        if(isMiddle.equals("") || isMiddle.equals(null))
+        scanner.nextLine();
+        String isMiddle = scanner.nextLine();
+        if(isMiddle.isEmpty() || isMiddle.equals(null))
         {
-          middle = "";
+          middle = null;
         }
+        //this regex covers letters in all scripts, including punctuation.
+        //This allows for names like François, Müller, and Ja'Nelle.
         else if(Pattern.matches("^[\\p{L} .'-]+$", isMiddle))
         {
             middle = isMiddle;
@@ -87,6 +114,8 @@ public class Person
     {
         System.out.println("Last name: ");
         String isLName = scanner.next();
+        //this regex covers letters in all scripts, including punctuation.
+        //This allows for names like François, Müller, and Ja'Nelle.
         if(Pattern.matches("^[\\p{L} .'-]+$", isLName))
         {
             lName = isLName;
@@ -109,13 +138,34 @@ public class Person
 
     /**
     *   Get the Person's name
-    @return First and last name
+    @return First, middle (if applicable), and last name.
     */
     public String getName()
     {
+      if(middle != null)
+      {
+        return fName + " " + middle + " " + lName;
+      }
+      else
+      {
         return fName + " " + lName;
+      }
     }
 
+    /**
+     * Get the user's role (faculty or student)
+     * @return The user's role at the University.
+     */
+    //can be expanded in the future to other types of roles, like staff!
+    public String getRole()
+    {
+      return role;
+    }
+
+    /**
+     * Overrides the toString() method to print the user's ID name name.
+     * @return The user's name and ID number.
+     */
     public String toString()
     {
         String output = "";
