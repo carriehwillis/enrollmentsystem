@@ -8,10 +8,7 @@ import java.util.regex.*;
 
 public class Student extends Person
 {
-	// private String major;
-	//
-	// //for input validation
-	// private static final int maxMajor = 40;
+	private String role;
 
 	/**
 	*	Create a Student based on user input.
@@ -23,30 +20,10 @@ public class Student extends Person
 		// setMajor();
 	}
 
-	// public void setMajor()
-	// {
-	//   System.out.println("Please enter the student's major.");
-	//   scanner.nextLine();
-	//   String isMajor = scanner.nextLine();
-	//   if(Pattern.matches(".*[a-zA-Z]+.*", isMajor) && isMajor.length() > 0 && isMajor.length() < (maxMajor + 1))
-	//   {
-	//     major = isMajor;
-	//   }
-	//   else
-	//   {
-	//     System.out.println("Invalid entry.");
-	//     setMajor();
-	//   }
-	// }
-	//
-	// /**
-	// *	Get the student's major.
-	// @return The student's major.
-	// */
-	// public String getMajor()
-	// {
-	// 	return major;
-	// }
-
+	public Student(String fName, String middle, String lName)
+	{
+		super(fName, middle, lName);
+		role = "student";
+	}
 
 }
